@@ -7,16 +7,46 @@ def disable_item(user_answers, item_id):
     user_answers[item_id]['disabled'] = True
 
 
-def go_to_question(item_id, parsed, nav_buttons, msg, variants_frame, btn_prev, btn_comfirm, btn_next, user_answers):
+def destroy_widgets_in_variants_frame(entry, checkbox, radiobox):
+    # destroying widgets in the variants_frame
+    if not (entry is None):
+        entry.destroy()
+        print('entry was destroyed')
+    if len(checkbox) != 0:
+        for checkbutton in checkbox:
+            checkbutton.destroy()
+        print('checkbox was destroyed')
+    if len(radiobox) != 0:
+        for radiobutton in radiobox:
+            radiobutton.destroy()
+        print('radiobox was destroyed')
+
+
+def check_all_comfirmed(user_answers, win):
+    for item in user_answers.values():
+        if not item['disabled']:
+            return
+    win.destroy()
+
+
+def go_to_question(item_id, parsed, nav_buttons, msg, variants_frame, btn_prev, btn_comfirm, btn_next, user_answers,
+                   win):
     print('go to question ', item_id)
-    print('user_answers', user_answers)
+    # print('user_answers', user_answers)
     # print(nav_buttons)
+
+    # print('before', variants_frame.children)
+    vscopy = variants_frame.children.copy()
+    for key, widget in vscopy.items():
+        widget.destroy()
+    # print('after', variants_frame.children)
+
+    # destroy_widgets_in_variants_frame(entry, checkbox, radiobox)
 
     if item_id > 0:
         btn_prev.config(state=NORMAL)
-        btn_prev.config(command=(lambda: go_to_question(item_id - 1, parsed,
-                                                        nav_buttons, msg, variants_frame,
-                                                        btn_prev, btn_comfirm, btn_next, user_answers)))
+        btn_prev.config(command=(lambda: go_to_question(item_id - 1, parsed, nav_buttons, msg, variants_frame,
+                                                        btn_prev, btn_comfirm, btn_next, user_answers, win)))
     else:
         btn_prev.config(state=DISABLED)
 
@@ -30,14 +60,15 @@ def go_to_question(item_id, parsed, nav_buttons, msg, variants_frame, btn_prev, 
         btn_comfirm.config(state=NORMAL)
         btn_comfirm.config(
             command=(lambda: nav_buttons[item_id].config(bg='green')
-                             or disable_item(user_answers, item_id) or btn_comfirm.config(state=DISABLED)))
+                             or disable_item(user_answers, item_id) or btn_comfirm.config(state=DISABLED)
+                             or check_all_comfirmed(user_answers, win)))
 
     if item_id + 1 < len(parsed):
         btn_next.config(state=NORMAL)
         btn_next.config(
             command=(
                 lambda: go_to_question(item_id + 1, parsed, nav_buttons, msg, variants_frame, btn_prev, btn_comfirm,
-                                       btn_next, user_answers)))
+                                       btn_next, user_answers, win)))
     else:
         btn_next.config(state=DISABLED)
 
@@ -51,25 +82,54 @@ def go_to_question(item_id, parsed, nav_buttons, msg, variants_frame, btn_prev, 
 
     msg.config(text=question_text)
 
-    return
-
     if item_type == 'entry':
         entry = Entry(variants_frame)
         entry.config(font=resourses.constants.ENTRY_FONT)
-        entry.config(width=5)
-        entry.pack(expand=YES, fill=BOTH, padx=10, pady=10)
+        entry.config(width=30)
+        entry.pack(expand=YES, padx=10, pady=10)
+        entry.config(text='asd')
+
+        # Button(variants_frame, text='OK', command=win.destroy).pack()
+
     elif item_type == 'checkbutton':
+        # return
+        checkbox = []
         for variant_id in map(str, range(len(variants))):
             variant = variants[variant_id]
             checkbutton = Checkbutton(variants_frame)
             checkbutton.config(text=variant)
             checkbutton.pack()
+            checkbox.append(checkbutton)
+    elif item_type == 'radiobutton':
+        # return
+        radiobox = []
+        for variant_id in map(str, range(len(variants))):
+            variant = variants[variant_id]
+            radiobutton = Radiobutton(variants_frame)
+            radiobutton.config(text=variant)
+            radiobutton.pack()
+            radiobox.append(radiobutton)
+    else:
+        print('UNEXPECTED ITEM TYPE (should be entry or checkbutton or radiobutton)')
 
     if False:
         print('id :', item['id'])
         print('type :', item['type'])
         print('question :', item['question'])
         print('answer :', item['answer'])
+
+
+def get_results(user_answers, parsed):
+    count = 0
+
+    # user_answers[0]['answers'] = {'0' : '0'}
+    # print(user_answers[0]['answers'])
+    # print(parsed['0']['answers'])
+
+    for i in range(len(user_answers)):
+        if user_answers[i]['answers'] == parsed[str(i)]['answers']:
+            count += 1
+    return count, len(parsed)
 
 
 def testing(root, parsed):
@@ -97,9 +157,8 @@ def testing(root, parsed):
         btn.config(text=str(item_id + 1), font=resourses.constants.BUTTON_FONT)
         btn.config(height=1, width=3)
         btn.config(overrelief=RAISED, activebackground='#DDD')
-        btn.config(command=(lambda item_id=item_id: go_to_question(item_id, parsed, nav_buttons, \
-                                                                   msg, variants_frame, btn_prev, btn_comfirm, \
-                                                                   btn_next, user_answers)))
+        btn.config(command=(lambda item_id=item_id: go_to_question(item_id, parsed, nav_buttons, msg, variants_frame,
+                                                                   btn_prev, btn_comfirm, btn_next, user_answers, win)))
         btn.pack(side=LEFT, padx=10, pady=10)
         nav_buttons.append(btn)
     nav_frame.pack(expand=NO, fill=BOTH)
@@ -107,10 +166,11 @@ def testing(root, parsed):
 
     msg = Message(main_frame)
     msg.config(font=resourses.constants.MESSAGE_FONT, justify=CENTER, width=700)
-    msg.config(bg="#FFF")
+    msg.config(bg="#EEE")
     msg.pack(expand=YES, fill=BOTH)
 
     variants_frame = Frame(main_frame)
+    variants_frame.config(bg='#EEE')
     variants_frame.pack(expand=YES, fill=BOTH)
 
     footer_frame = Frame(main_frame)
@@ -135,13 +195,24 @@ def testing(root, parsed):
     btn_next.config(overrelief=RAISED, activebackground='#DDD')
     btn_next.pack(side=RIGHT, expand=YES, fill=BOTH, padx=20, pady=20)
 
-    go_to_question(0, parsed, nav_buttons, msg, variants_frame, btn_prev, btn_comfirm, btn_next, user_answers)
+    go_to_question(0, parsed, nav_buttons, msg, variants_frame, btn_prev, btn_comfirm, btn_next, user_answers, win)
 
     # win.protocol('WM_DELETE_WINDOW', win.quit)
     win.focus_set()
     # win.grab_set()
     win.wait_window()
+
+    # Окно тестирования закрыто
+
     root.deiconify()
+    # welcome_msg.config(text=repr(user_answers))
+    root.title('Результаты')
+    btn_start.config(text='Начать заново')
+
+    user_result, total = get_results(user_answers, parsed)
+    rel = user_result
+
+    welcome_msg.config(text=results)
 
 
 if __name__ == '__main__':
