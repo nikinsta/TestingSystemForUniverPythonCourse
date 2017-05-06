@@ -1,0 +1,135 @@
+<list>
+    <item id="0" type="radiobutton">
+        <question>
+            <text>Что такое октоторп?</text>
+            <variants>
+                <variant id="0">Знак решетки (#)</variant>
+                <variant id="1">Морское животное</variant>
+                <variant id="2">Порода котов</variant>
+                <variant id="3">Планета, населенная жуками</variant>
+            </variants>
+        </question>
+        <answers>
+            <answer id="0">0</answer>
+        </answers>
+    </item>
+    <item id="1" type="entry">
+        <question>
+            <text>Сколько байтов в килобайте?</text>
+            <variants></variants>
+        </question>
+        <answers>
+            <answer id="0">1024</answer>
+        </answers>
+    </item>
+    <item id="2" type="checkbutton">
+        <question>
+            <text>Укажите верные факты</text>
+            <variants>
+                <variant id="0">Java - игра на PlayStation4</variant>
+                <variant id="1">С++ - это C с классами</variant>
+                <variant id="2">5B в шестнадцатеричной системе счисления равно 91 в десятичной</variant>
+                <variant id="3">Приложения под операционную систему android нельзя писать на языке Python</variant>
+            </variants>
+        </question>
+        <answers>
+            <answer id="0">1</answer>
+            <answer id="1">2</answer>
+        </answers>
+    </item>
+    <item id="3" type="checkbutton">
+        <question>
+            <text>Укажите, что не является дистрибутивом Linux</text>
+            <variants>
+                <variant id="0">Ubuntu</variant>
+                <variant id="1">macOS</variant>
+                <variant id="2">Windows XP</variant>
+                <variant id="3">Fedora</variant>
+                <variant id="4">Windows Vista</variant>
+                <variant id="5">Debian</variant>
+                <variant id="6">Unix</variant>
+            </variants>
+        </question>
+        <answers>
+            <answer id="0">1</answer>
+            <answer id="1">2</answer>
+            <answer id="2">4</answer>
+            <answer id="3">6</answer>
+        </answers>
+    </item>
+    <item id="4" type="entry">
+        <question>
+            <text>Сколько долей в двудольном графе? (Укажите число)</text>
+            <variants></variants>
+        </question>
+        <answers>
+            <answer id="0">2</answer>
+        </answers>
+    </item>
+    <item id="5" type="checkbutton">
+        <question>
+            <text>С помощью какой/каких команд SQL можно изменять таблицы базы данных?</text>
+            <variants>
+                <variant id="0">INSERT</variant>
+                <variant id="1">SELECT</variant>
+                <variant id="2">CHANGE</variant>
+                <variant id="3">UPDATE</variant>
+                <variant id="4">DELETE</variant>
+                <variant id="5">CREATE</variant>
+            </variants>
+        </question>
+        <answers>
+            <answer id="0">0</answer>
+            <answer id="1">3</answer>
+            <answer id="2">4</answer>
+        </answers>
+    </item>
+    <item id="6" type="entry">
+        <question>
+            <text>Единица измерения количества информации</text>
+            <variants></variants>
+        </question>
+        <answers>
+            <answer id="0">бит</answer>
+        </answers>
+    </item>
+    <item id="7" type="radiobutton">
+        <question>
+            <text>Расшифруйте аббревиатуру XML</text>
+            <variants>
+                <variant id="0">Xenon Material Lock</variant>
+                <variant id="1">eXtreme Machine Learning</variant>
+                <variant id="2">eXtensible Markup Language</variant>
+                <variant id="3">Xenon Meta Language</variant>
+            </variants>
+        </question>
+        <answers>
+            <answer id="0">2</answer>
+        </answers>
+    </item>
+    <item id="8" type="radiobutton">
+        <question>
+            <text>Какая из парадигм программирования не поддерживается языком программирования Python?</text>
+            <variants>
+                <variant id="0">Императивная</variant>
+                <variant id="1">Объектно-ориентированная</variant>
+                <variant id="2">Функциональная</variant>
+                <variant id="3">Рефлексивная</variant>
+                <variant id="4">Логическая</variant>
+                <variant id="5">Декларативная</variant>
+            </variants>
+        </question>
+        <answers>
+            <answer id="0">4</answer>
+        </answers>
+    </item>
+    <item id="9" type="entry">
+        <question>
+            <text>Назовите одним словом прикладное программное обеспечение для просмотра веб-страниц (пример - Mozilla Firefox)</text>
+            <variants></variants>
+        </question>
+        <answers>
+            <answer id="0">браузер</answer>
+        </answers>
+    </item>
+</list>
