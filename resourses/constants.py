@@ -1,5 +1,6 @@
-message_font = ('consolas', 20, 'roman')
-button_font = ('times', 20, '')
+MESSAGE_FONT = ('consolas', 20, 'roman')
+BUTTON_FONT = ('times', 20, '')
+ENTRY_FONT = ('times', 20, '')
 
 intro_message = 'Добро пожаловать в тестирующую систему!\n' \
                 'Вам предстоит пройти нелегкое испытание, в ходе которого Вас проверят на знание информационных технологий.\n' \
