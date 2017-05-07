@@ -1,9 +1,20 @@
+# encoding: utf-8
+# module xml_parser
+"""
+XML parser for question.xml
+"""
+
 import xml.dom.minidom
 from xml.dom.minidom import Node
 
 
 def parse(path):
-    doc = xml.dom.minidom.parse('resourses/questions.xml')
+    """
+    Return special structure that can describe XML document.
+    Uses DOM parser.
+    """
+
+    doc = xml.dom.minidom.parse(path)
 
     parsed = {}
     for item_tag in doc.getElementsByTagName("item"):  # обход объекта DOM
@@ -49,6 +60,10 @@ def parse(path):
     return parsed
 
 if __name__ == '__main__':
+    """
+    Sandbox for testing the module.
+    """
+
     path = 'resourses/questions.xml'
     parsed = parse(path)
     for key, value in parsed.items():

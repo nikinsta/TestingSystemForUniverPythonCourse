@@ -1,9 +1,22 @@
+"""
+Main part of the application.
+Uses tkinter and adapted XML parser.
+"""
+
 import xml_parser
 import resourses.constants
 from tkinter import *
 
 
 def disable_item(user_answers, item_id, variants_frame, parsed):
+    """
+    Disables all the widgets in variants_frame.
+
+    Temporarily responsible for fixation of entry content in user_answers on confirm button pressed (TODO).
+    """
+
+    # TODO Вынести реализацию фиксации текущего содержимого entry в отдельную функцию.
+
     user_answers[item_id]['disabled'] = True
     vscopy = variants_frame.children.copy()
     for key, widget in vscopy.items():
@@ -22,6 +35,10 @@ def disable_item(user_answers, item_id, variants_frame, parsed):
 
 
 def destroy_widgets_in_variants_frame(entry, checkbox, radiobox):
+    """
+    Unnecessary function.
+    """
+
     # destroying widgets in the variants_frame
     if not (entry is None):
         entry.destroy()
@@ -37,6 +54,12 @@ def destroy_widgets_in_variants_frame(entry, checkbox, radiobox):
 
 
 def check_all_comfirmed(user_answers, win):
+    """
+    Destroy the window if all question items confirmed.
+
+    Returns nothing.
+    """
+
     for item in user_answers.values():
         if not item['disabled']:
             return
@@ -44,6 +67,12 @@ def check_all_comfirmed(user_answers, win):
 
 
 def toggle_checkbutton(checkbutton_var, item_id, variant_id, user_answers):
+    """
+    Changes user_answer accordingly to the checkbutton state.
+
+    Returns nothing.
+    """
+
     value = checkbutton_var.get()
     print('chkbut value :', value)
     if value == 1:
@@ -54,6 +83,12 @@ def toggle_checkbutton(checkbutton_var, item_id, variant_id, user_answers):
 
 
 def select_radiobutton(radiobutton_var, item_id, variant_id, user_answers):
+    """
+    Changes user_answer accordingly to the radiobutton state.
+
+    Returns nothing.
+    """
+
     value = radiobutton_var.get()
     print('radiobtn value :', value)
     user_answers[item_id]['answers'].clear()
@@ -63,6 +98,12 @@ def select_radiobutton(radiobutton_var, item_id, variant_id, user_answers):
 def go_to_question(item_id, prev_item_id, parsed, nav_buttons, msg, variants_frame, btn_prev, btn_comfirm, btn_next,
                    user_answers,
                    win):
+    """
+    Realise jump to item_id-th question.
+
+    Returns nothing.
+    """
+
     print('go to question ', item_id)
     # print('user_answers', user_answers)
     # print(nav_buttons)
@@ -221,12 +262,11 @@ def go_to_question(item_id, prev_item_id, parsed, nav_buttons, msg, variants_fra
 
 
 def get_results(user_answers, parsed):
+    """
+    Returns pair of correct answer count and total questions count.
+    """
+
     count = 0
-
-    # user_answers[0]['answers'] = {'0' : '0'}
-    # print(user_answers[0]['answers'])
-    # print(parsed['0']['answers'])
-
     for i in range(len(user_answers)):
         if user_answers[i]['answers'] == set(parsed[str(i)]['answers'].values()):
             count += 1
@@ -234,6 +274,10 @@ def get_results(user_answers, parsed):
 
 
 def testing(root, parsed):
+    """
+    Creates window with main functionality of the application. Displays results of user testing on main (root) window.
+    """
+
     user_answers = {i: {'disabled': False, 'answers': set()} for i in range(len(parsed))}
     # user_answers[0]['disabled'] = True
     # user_answers[1]['answers'] = {1, 2}
@@ -329,6 +373,7 @@ def testing(root, parsed):
 
 
 if __name__ == '__main__':
+
     path = 'resourses/questions.xml'
     parsed = xml_parser.parse(path)
     # parsed.popitem()
