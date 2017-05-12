@@ -306,9 +306,14 @@ def testing(root, parsed):
             command=(lambda item_id=item_id: go_to_question(item_id, -1, parsed, nav_buttons, msg, variants_frame,
                                                             btn_prev, btn_comfirm, btn_next, user_answers, win)))
         btn.pack(side=LEFT, padx=10, pady=10)
+        # btn.pack(side=TOP, padx=10, pady=10)
         nav_buttons.append(btn)
     nav_frame.pack(expand=NO, fill=BOTH)
-    print(nav_buttons[0] is nav_buttons[1])
+    # print(nav_buttons[0] is nav_buttons[1])
+
+    # scroll_bar = Scrollbar(nav_frame)
+    # scroll_bar.config(command=nav_frame.yview)
+    # nav_frame.config(yscrollcommand=)
 
     msg = Message(main_frame)
     msg.config(font=resourses.constants.MESSAGE_FONT, justify=CENTER, width=700)
